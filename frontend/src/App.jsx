@@ -10,6 +10,7 @@ import LoansTakenPage from "./pages/LoansTaken/LoansTakenPage";
 import ChitFundsPage from "./pages/ChitFunds/ChitFundsPage";
 import InvestmentsPage from "./pages/Investments/InvestmentsPage";
 import ReportsPage from "./pages/Reports/ReportsPage";
+import SettingsPage from "./pages/Settings/SettingsPage";
 
 import {
   LayoutDashboard,
@@ -669,6 +670,8 @@ const netWorth = Number(
                       <InvestmentsPage />
                     ): activePage === "Reports" ? (
     <ReportsPage />
+) : activePage === "Settings" ? (
+    <SettingsPage />
 ) :
                       (
 

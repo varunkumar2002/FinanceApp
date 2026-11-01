@@ -23,3 +23,5 @@ from app.models.investment import (
 )
 
 from app.models.account_transfer import AccountTransfer
+
+from app.models.user_preference import UserPreference
