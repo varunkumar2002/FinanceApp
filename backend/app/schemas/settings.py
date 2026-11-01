@@ -1,11 +1,12 @@
-from pydantic import BaseModel, EmailStr, Field
+
+from pydantic import BaseModel, Field
 from typing import Literal
 
 
 class ProfileResponse(BaseModel):
     id: int
     full_name: str
-    email: EmailStr
+    email: str
 
     model_config = {
         "from_attributes": True
@@ -14,7 +15,7 @@ class ProfileResponse(BaseModel):
 
 class ProfileUpdate(BaseModel):
     full_name: str = Field(min_length=2, max_length=100)
-    email: EmailStr
+    email: str = Field(min_length=3, max_length=255)
 
 
 class PreferencesResponse(BaseModel):
