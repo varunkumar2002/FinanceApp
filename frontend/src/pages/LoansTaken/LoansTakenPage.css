@@ -1,0 +1,821 @@
+.loans-taken-page {
+    width: 100%;
+    color: #202938;
+    animation: takenFadeIn 0.25s ease;
+}
+
+@keyframes takenFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.taken-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 26px;
+}
+
+.taken-page-header h1 {
+    margin: 0;
+    color: #172033;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.taken-page-header p {
+    margin: 7px 0 0;
+    color: #788397;
+    font-size: 13px;
+}
+
+.taken-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.taken-primary-button,
+.taken-secondary-button,
+.taken-refresh-button,
+.taken-back-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.taken-primary-button {
+    color: #fff;
+    background: #3157d5;
+    border: 1px solid #3157d5;
+}
+
+.taken-primary-button:hover {
+    background: #2446b8;
+    border-color: #2446b8;
+}
+
+.taken-secondary-button {
+    color: #354158;
+    background: #fff;
+    border: 1px solid #dce2eb;
+}
+
+.taken-secondary-button:hover,
+.taken-refresh-button:hover {
+    background: #f5f7fb;
+    border-color: #c6cfdd;
+}
+
+.taken-primary-button:disabled,
+.taken-secondary-button:disabled,
+.taken-refresh-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.taken-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 15px;
+    margin-bottom: 24px;
+}
+
+.taken-summary-card {
+    min-width: 0;
+    padding: 19px;
+    background: #fff;
+    border: 1px solid #e8ebf1;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(25, 39, 65, 0.035);
+}
+
+.taken-summary-card-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.taken-summary-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 38px;
+    color: #3157d5;
+    background: #edf1ff;
+    border-radius: 10px;
+}
+
+.principal-card .taken-summary-icon {
+    color: #087f65;
+    background: #e8f7f1;
+}
+
+.interest-due-card .taken-summary-icon {
+    color: #c47b17;
+    background: #fff5e6;
+}
+
+.taken-summary-title {
+    margin: 0 0 7px;
+    color: #788397;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.taken-summary-value {
+    margin: 0;
+    color: #172033;
+    font-size: 20px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.taken-summary-description {
+    margin: 8px 0 0;
+    color: #98a1b0;
+    font-size: 11px;
+}
+
+.taken-section-card {
+    min-width: 0;
+    padding: 21px;
+    background: #fff;
+    border: 1px solid #e8ebf1;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(25, 39, 65, 0.035);
+}
+
+.taken-loan-list-section {
+    margin-bottom: 25px;
+}
+
+.taken-list-heading,
+.taken-section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.taken-list-heading h2,
+.taken-section-heading h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    color: #202a3d;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.taken-list-heading p,
+.taken-section-heading p {
+    margin: 6px 0 0;
+    color: #8993a4;
+    font-size: 12px;
+}
+
+.taken-refresh-button {
+    padding: 8px 11px;
+    color: #536078;
+    background: #fff;
+    border: 1px solid #e0e5ed;
+    font-size: 12px;
+}
+
+.taken-list-toolbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 21px 0 17px;
+}
+
+.taken-search-box {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: min(380px, 100%);
+    padding: 0 12px;
+    color: #8993a4;
+    background: #fff;
+    border: 1px solid #e0e5ed;
+    border-radius: 8px;
+}
+
+.taken-search-box input {
+    width: 100%;
+    height: 39px;
+    color: #263247;
+    background: transparent;
+    border: 0;
+    outline: none;
+    font-size: 12px;
+}
+
+.taken-search-box input::placeholder {
+    color: #a1a9b6;
+}
+
+.taken-filter-select {
+    min-width: 145px;
+    padding: 0 11px;
+    color: #455168;
+    background: #fff;
+    border: 1px solid #e0e5ed;
+    border-radius: 8px;
+    outline: none;
+    font-size: 12px;
+}
+
+.taken-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.taken-table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+.taken-table th {
+    padding: 13px 12px;
+    color: #8791a1;
+    background: #f8f9fc;
+    border-top: 1px solid #edf0f5;
+    border-bottom: 1px solid #edf0f5;
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.45px;
+    text-transform: uppercase;
+}
+
+.taken-table td {
+    padding: 14px 12px;
+    color: #536078;
+    border-bottom: 1px solid #f0f2f6;
+    font-size: 12px;
+}
+
+.taken-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.taken-table tbody tr:hover {
+    background: #fafbfe;
+}
+
+.taken-lender-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.taken-lender-cell strong {
+    display: block;
+    color: #29354a;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.taken-lender-cell small {
+    display: block;
+    margin-top: 4px;
+    color: #98a1b0;
+    font-size: 10px;
+}
+
+.taken-lender-avatar {
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    width: 46px;
+    height: 46px;
+    color: #3157d5;
+    background: #edf1ff;
+    border-radius: 12px;
+}
+
+.taken-lender-avatar.small {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+}
+
+.taken-outstanding-cell {
+    color: #087f65 !important;
+    font-weight: 700;
+}
+
+.taken-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 650;
+}
+
+.taken-status.active {
+    color: #087f65;
+    background: #e8f7f1;
+}
+
+.taken-status.closed {
+    color: #747d8c;
+    background: #f0f1f4;
+}
+
+.taken-row-actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.taken-row-action,
+.taken-icon-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: #68758a;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.taken-row-action {
+    width: 30px;
+    height: 30px;
+}
+
+.taken-row-action:hover,
+.taken-icon-button:hover {
+    color: #3157d5;
+    background: #edf1ff;
+}
+
+.taken-row-action:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.taken-empty-state,
+.taken-empty-small {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 45px 20px;
+    text-align: center;
+}
+
+.taken-empty-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 56px;
+    height: 56px;
+    color: #8492aa;
+    background: #f1f4f9;
+    border-radius: 16px;
+}
+
+.taken-empty-state h3 {
+    margin: 15px 0 5px;
+    color: #273349;
+    font-size: 15px;
+}
+
+.taken-empty-state p {
+    max-width: 380px;
+    margin: 0 0 18px;
+    color: #8993a4;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.taken-empty-small {
+    padding: 28px 10px;
+    color: #98a1b0;
+    font-size: 12px;
+}
+
+.taken-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 11px;
+    min-height: 180px;
+    color: #7b8799;
+    font-size: 13px;
+}
+
+.taken-spinner {
+    animation: takenSpin 0.9s linear infinite;
+}
+
+@keyframes takenSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.taken-alert {
+    margin-bottom: 17px;
+    padding: 12px 15px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+.taken-alert-error {
+    color: #b42318;
+    background: #fff1f0;
+    border-color: #ffd6d2;
+}
+
+.taken-alert-success {
+    color: #087f65;
+    background: #eaf8f2;
+    border-color: #ccefe1;
+}
+
+.taken-modal-overlay {
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: rgba(20, 29, 45, 0.48);
+    overflow-y: auto;
+}
+
+.taken-modal {
+    width: 100%;
+    max-width: 570px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 18px 55px rgba(12, 22, 40, 0.2);
+    animation: takenModalIn 0.2s ease;
+}
+
+.taken-modal-wide {
+    max-width: 850px;
+}
+
+@keyframes takenModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.99);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.taken-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 21px 23px;
+    border-bottom: 1px solid #edf0f5;
+}
+
+.taken-modal-header h2 {
+    margin: 0;
+    color: #202a3d;
+    font-size: 18px;
+}
+
+.taken-modal-header p {
+    margin: 6px 0 0;
+    color: #8993a4;
+    font-size: 12px;
+}
+
+.taken-icon-button {
+    width: 32px;
+    height: 32px;
+}
+
+.taken-modal-content {
+    padding: 22px 23px;
+}
+
+.taken-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 17px;
+}
+
+.taken-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+}
+
+.taken-form-field.full-width {
+    grid-column: 1 / -1;
+}
+
+.taken-form-field>span {
+    color: #46536a;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.taken-form-field input,
+.taken-form-field select,
+.taken-form-field textarea {
+    width: 100%;
+    min-width: 0;
+    padding: 10px 11px;
+    color: #273349;
+    background: #fff;
+    border: 1px solid #dfe4ec;
+    border-radius: 7px;
+    outline: none;
+    font-family: inherit;
+    font-size: 12px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.taken-form-field input,
+.taken-form-field select {
+    height: 40px;
+}
+
+.taken-form-field textarea {
+    resize: vertical;
+    min-height: 78px;
+}
+
+.taken-form-field input:focus,
+.taken-form-field select:focus,
+.taken-form-field textarea:focus {
+    border-color: #6684e8;
+    box-shadow: 0 0 0 3px rgba(49, 87, 213, 0.09);
+}
+
+.taken-field-hint {
+    color: #a16b1e;
+    font-size: 10px;
+}
+
+.taken-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 9px;
+    margin-top: 23px;
+    padding-top: 17px;
+    border-top: 1px solid #edf0f5;
+}
+
+.taken-back-button {
+    margin-bottom: 13px;
+    padding: 0;
+    color: #64718a;
+    background: transparent;
+    border: 0;
+    font-size: 12px;
+}
+
+.taken-back-button:hover {
+    color: #3157d5;
+}
+
+.taken-detail-heading {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    margin-bottom: 20px;
+    padding: 19px;
+    background: #fff;
+    border: 1px solid #e8ebf1;
+    border-radius: 12px;
+}
+
+.taken-detail-heading h2 {
+    margin: 0;
+    color: #202a3d;
+    font-size: 17px;
+}
+
+.taken-detail-heading p {
+    margin: 5px 0 0;
+    color: #8993a4;
+    font-size: 12px;
+}
+
+.taken-detail-heading .taken-status {
+    margin-left: auto;
+}
+
+.taken-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 13px;
+    margin-bottom: 17px;
+}
+
+.taken-detail-card {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    min-width: 0;
+    padding: 17px;
+    background: #fff;
+    border: 1px solid #e8ebf1;
+    border-radius: 10px;
+}
+
+.taken-detail-card span,
+.taken-info-panel span {
+    color: #8993a4;
+    font-size: 11px;
+}
+
+.taken-detail-card strong {
+    color: #263247;
+    font-size: 17px;
+    overflow-wrap: anywhere;
+}
+
+.taken-info-panel {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+    margin-bottom: 22px;
+    padding: 18px;
+    background: #fff;
+    border: 1px solid #e8ebf1;
+    border-radius: 10px;
+}
+
+.taken-info-panel div {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+}
+
+.taken-info-panel strong {
+    color: #344158;
+    font-size: 12px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.taken-history-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 17px;
+}
+
+.taken-section-heading {
+    margin-bottom: 16px;
+}
+
+.taken-section-heading h3 {
+    font-size: 14px;
+}
+
+.taken-payment-type {
+    display: inline-flex;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: 650;
+    text-transform: capitalize;
+}
+
+.taken-payment-type.principal {
+    color: #3157d5;
+    background: #edf1ff;
+}
+
+.taken-payment-type.interest {
+    color: #a16b1e;
+    background: #fff5e6;
+}
+
+/* Responsive layout */
+
+@media (max-width: 1200px) {
+    .taken-summary-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .taken-detail-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 760px) {
+    .taken-page-header {
+        flex-direction: column;
+    }
+
+    .taken-header-actions {
+        width: 100%;
+    }
+
+    .taken-header-actions button {
+        flex: 1;
+    }
+
+    .taken-summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .taken-list-toolbar {
+        flex-direction: column;
+    }
+
+    .taken-search-box {
+        width: 100%;
+    }
+
+    .taken-filter-select {
+        height: 39px;
+    }
+
+    .taken-info-panel {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .taken-summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .taken-detail-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .taken-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .taken-form-field.full-width {
+        grid-column: auto;
+    }
+
+    .taken-modal-overlay {
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .taken-modal {
+        max-height: calc(100vh - 20px);
+    }
+
+    .taken-modal-header,
+    .taken-modal-content {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .taken-info-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .taken-detail-heading {
+        flex-wrap: wrap;
+    }
+
+    .taken-detail-heading .taken-status {
+        margin-left: 0;
+    }
+}

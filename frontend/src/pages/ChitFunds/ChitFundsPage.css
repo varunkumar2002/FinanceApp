@@ -1,0 +1,595 @@
+.chit-page {
+    width: 100%;
+    color: #202938;
+}
+
+.chit-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.chit-heading h1 {
+    margin: 0;
+    font-size: 25px;
+    color: #172033;
+}
+
+.chit-heading p {
+    margin: 7px 0 0;
+    color: #788397;
+    font-size: 13px;
+}
+
+.chit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.chit-btn.primary {
+    background: #3157d5;
+    color: white;
+    border: 1px solid #3157d5;
+}
+
+.chit-btn.primary:hover {
+    background: #2446b8;
+}
+
+.chit-btn.secondary {
+    background: white;
+    color: #354158;
+    border: 1px solid #dce2eb;
+}
+
+.chit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Summary cards */
+
+.chit-summary {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.chit-summary>div,
+.chit-panel,
+.chit-fund-card,
+.chit-detail-cards>div {
+    background: #fff;
+    border: 1px solid #e8ebf1;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #19274109;
+}
+
+.chit-summary>div {
+    padding: 18px;
+}
+
+.chit-summary span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #788397;
+    font-size: 12px;
+}
+
+.chit-summary span svg {
+    color: #3157d5;
+}
+
+.chit-summary strong {
+    display: block;
+    margin-top: 12px;
+    font-size: 21px;
+    color: #172033;
+}
+
+/* Main panel */
+
+.chit-panel {
+    padding: 21px;
+    margin-bottom: 20px;
+}
+
+.chit-panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.chit-panel-head h2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 16px;
+}
+
+.chit-panel-head p {
+    margin: 6px 0 0;
+    color: #8993a4;
+    font-size: 12px;
+}
+
+.chit-refresh,
+.chit-small-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: white;
+    border: 1px solid #e0e5ed;
+    border-radius: 7px;
+    padding: 8px 10px;
+    color: #536078;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+/* Search and filter */
+
+.chit-toolbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.chit-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: min(380px, 100%);
+    padding: 0 11px;
+    border: 1px solid #e0e5ed;
+    border-radius: 8px;
+    color: #8993a4;
+}
+
+.chit-search input {
+    height: 38px;
+    width: 100%;
+    border: 0;
+    outline: 0;
+    font-size: 12px;
+}
+
+.chit-toolbar select,
+.chit-field input,
+.chit-field select,
+.chit-field textarea {
+    padding: 10px;
+    border: 1px solid #dfe4ec;
+    border-radius: 7px;
+    background: white;
+    color: #273349;
+    font: inherit;
+    font-size: 12px;
+    outline: none;
+}
+
+.chit-toolbar select {
+    min-width: 140px;
+}
+
+/* Scheme cards */
+
+.chit-cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.chit-fund-card {
+    padding: 18px;
+}
+
+.chit-fund-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chit-fund-icon {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #edf1ff;
+    color: #3157d5;
+}
+
+.chit-fund-card h3 {
+    margin: 14px 0 4px;
+    font-size: 16px;
+}
+
+.chit-organizer {
+    margin: 0;
+    color: #8993a4;
+    font-size: 12px;
+}
+
+.chit-fund-value {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 18px;
+    padding: 12px;
+    background: #f8f9fc;
+    border-radius: 8px;
+}
+
+.chit-fund-value span,
+.chit-card-metrics span {
+    font-size: 11px;
+    color: #8993a4;
+}
+
+.chit-fund-value strong {
+    font-size: 17px;
+}
+
+.chit-card-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 15px 0;
+}
+
+.chit-card-metrics div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.chit-card-metrics b {
+    font-size: 12px;
+    color: #344158;
+}
+
+.chit-progress {
+    height: 6px;
+    background: #edf0f5;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.chit-progress div {
+    height: 100%;
+    background: #3157d5;
+    border-radius: 8px;
+}
+
+.chit-card-footer {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+}
+
+.chit-card-footer>span {
+    margin-right: auto;
+    color: #8993a4;
+    font-size: 10px;
+}
+
+/* Status */
+
+.chit-status {
+    display: inline-flex;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 650;
+    text-transform: capitalize;
+}
+
+.chit-status.active,
+.chit-status.paid {
+    background: #e8f7f1;
+    color: #087f65;
+}
+
+.chit-status.paused,
+.chit-status.partial {
+    background: #fff5e6;
+    color: #a16b1e;
+}
+
+.chit-status.completed {
+    background: #edf1ff;
+    color: #3157d5;
+}
+
+/* Tables */
+
+.chit-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 16px;
+}
+
+.chit-table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+.chit-table th {
+    padding: 12px;
+    text-align: left;
+    background: #f8f9fc;
+    border-block: 1px solid #edf0f5;
+    color: #8791a1;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.chit-table td {
+    padding: 13px 12px;
+    border-bottom: 1px solid #f0f2f6;
+    color: #536078;
+    font-size: 12px;
+}
+
+.chit-table td small {
+    display: block;
+    margin-top: 4px;
+    color: #8993a4;
+}
+
+/* Detail cards */
+
+.chit-detail-cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 13px;
+    margin-bottom: 18px;
+}
+
+.chit-detail-cards>div {
+    padding: 17px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.chit-detail-cards span {
+    font-size: 11px;
+    color: #8993a4;
+}
+
+.chit-detail-cards strong {
+    font-size: 17px;
+}
+
+.chit-back {
+    padding: 0;
+    margin-bottom: 12px;
+    border: 0;
+    background: none;
+    color: #64718a;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.chit-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Forms */
+
+.chit-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.chit-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 0;
+}
+
+.chit-field span {
+    font-size: 12px;
+    font-weight: 600;
+    color: #46536a;
+}
+
+.chit-field input,
+.chit-field select {
+    height: 40px;
+}
+
+.chit-field textarea {
+    min-height: 75px;
+    resize: vertical;
+}
+
+.chit-field.full,
+.chit-form-actions {
+    grid-column: 1 / -1;
+}
+
+.chit-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #46536a;
+}
+
+.chit-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 9px;
+    padding-top: 15px;
+    border-top: 1px solid #edf0f5;
+}
+
+/* Modal */
+
+.chit-overlay {
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: #141d2d80;
+    overflow: auto;
+}
+
+.chit-modal {
+    width: 100%;
+    max-width: 620px;
+    max-height: calc(100vh - 36px);
+    overflow: auto;
+    background: white;
+    border-radius: 13px;
+    box-shadow: 0 18px 55px #0c162033;
+}
+
+.chit-modal>header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 19px 22px;
+    border-bottom: 1px solid #edf0f5;
+}
+
+.chit-modal h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.chit-modal-body {
+    padding: 22px;
+}
+
+.chit-icon-btn {
+    border: 0;
+    background: none;
+    cursor: pointer;
+    color: #68758a;
+}
+
+/* Alerts and loading */
+
+.chit-alert {
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 12px;
+}
+
+.chit-alert.error {
+    background: #fff1f0;
+    color: #b42318;
+}
+
+.chit-alert.success {
+    background: #eaf8f2;
+    color: #087f65;
+}
+
+.chit-loading,
+.chit-empty {
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 9px;
+    color: #8993a4;
+    font-size: 12px;
+}
+
+.chit-empty h3 {
+    margin: 0;
+    color: #273349;
+    font-size: 15px;
+}
+
+.chit-empty p {
+    margin: 0;
+}
+
+.spin {
+    animation: chitspin 1s linear infinite;
+}
+
+@keyframes chitspin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive */
+
+@media (max-width: 1000px) {
+    .chit-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .chit-detail-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 650px) {
+    .chit-heading {
+        flex-direction: column;
+    }
+
+    .chit-summary,
+    .chit-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .chit-toolbar {
+        flex-direction: column;
+    }
+
+    .chit-form {
+        grid-template-columns: 1fr;
+    }
+
+    .chit-field.full,
+    .chit-form-actions {
+        grid-column: auto;
+    }
+
+    .chit-detail-cards {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .chit-actions {
+        width: 100%;
+    }
+
+    .chit-actions button {
+        flex: 1;
+    }
+}
