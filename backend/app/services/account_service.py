@@ -1,3 +1,4 @@
+# account_service.py
 from decimal import Decimal
 
 from sqlalchemy import case, func
@@ -6,6 +7,7 @@ from sqlalchemy.orm import Session
 from app.models.account import Account
 from app.models.transaction import Transaction
 from app.models.account_transfer import AccountTransfer
+from app.models.credit_card_transaction import CreditCardTransaction
 
 from app.schemas.account import AccountCreate, AccountUpdate
 
@@ -79,6 +81,24 @@ def get_account_balance_map(
         for row in transfer_rows
     }
 
+    card_payment_rows = (
+        db.query(
+            CreditCardTransaction.account_id,
+            func.sum(CreditCardTransaction.amount).label("card_payments")
+        )
+        .filter(
+            CreditCardTransaction.user_id == user_id,
+            CreditCardTransaction.transaction_type == "payment",
+            CreditCardTransaction.account_id.isnot(None)
+        )
+        .group_by(CreditCardTransaction.account_id)
+        .all()
+    )
+    card_payments_by_account = {
+        row.account_id: Decimal(str(row.card_payments or 0))
+        for row in card_payment_rows
+    }
+
     accounts = (
         db.query(Account)
         .filter(Account.user_id == user_id)
@@ -108,6 +128,7 @@ def get_account_balance_map(
                 account.id,
                 Decimal("0.00")
             )
+            - card_payments_by_account.get(account.id, Decimal("0.00"))
         )
 
     return balance_map

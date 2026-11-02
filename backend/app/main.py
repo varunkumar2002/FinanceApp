@@ -1,3 +1,4 @@
+# main.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
@@ -16,6 +17,7 @@ from app.api.v1.investments import router as investments_router
 from app.api.v1.transfers import router as transfers_router
 from app.api.v1.reports import router as reports_router
 from app.api.v1.settings import router as settings_router
+from app.api.v1.credit_cards import router as credit_cards_router
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -44,6 +46,7 @@ app.include_router(investments_router, prefix="/api/v1")
 app.include_router(transfers_router, prefix="/api/v1")
 app.include_router(reports_router, prefix="/api/v1")
 app.include_router(settings_router, prefix="/api/v1")
+app.include_router(credit_cards_router, prefix="/api/v1")
 
 @app.get("/")
 def home():

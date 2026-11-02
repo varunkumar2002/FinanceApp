@@ -1,3 +1,4 @@
+// LoansTakenPage.jsx
 import { useEffect, useState } from "react";
 import {
   ArrowLeft,
@@ -32,6 +33,7 @@ import {
 } from "../../services/loanTakenService";
 
 import "./LoansTakenPage.css";
+import CreditCardsSection from "./CreditCardsSection";
 
 const initialLoanForm = {
   lender_name: "",
@@ -985,6 +987,8 @@ export default function LoansTakenPage() {
           className="interest-due-card"
         />
       </div>
+
+      <CreditCardsSection />
 
       <section className="taken-section-card taken-loan-list-section">
         <div className="taken-list-heading">

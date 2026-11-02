@@ -1,3 +1,4 @@
+# backend/app/models/__init__.py
 from app.models.user import User
 from app.models.account import Account
 from app.models.category import Category
@@ -25,3 +26,5 @@ from app.models.investment import (
 from app.models.account_transfer import AccountTransfer
 
 from app.models.user_preference import UserPreference
+from app.models.credit_card import CreditCard
+from app.models.credit_card_transaction import CreditCardTransaction

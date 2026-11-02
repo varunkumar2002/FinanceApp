@@ -247,3 +247,4 @@
         font-size: 12px;
     }
 }
+.dashboard-recent-list{display:flex;flex-direction:column}.dashboard-recent-row{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:13px 2px;border-bottom:1px solid #edf0f5}.dashboard-recent-row:last-child{border-bottom:0}.dashboard-recent-row strong{color:#263247;font-size:13px}.dashboard-recent-row p{margin:5px 0 0;color:#788397;font-size:12px}.dashboard-recent-row .dashboard-positive{color:#16834a}

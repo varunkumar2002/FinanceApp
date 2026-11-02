@@ -1,4 +1,4 @@
-
+# reports.py
 from datetime import date
 from decimal import Decimal
 from collections import defaultdict
@@ -13,7 +13,9 @@ from app.models.account import Account
 
 # Include this import if you have implemented account transfers.
 from app.models.account_transfer import AccountTransfer
-
+from app.models.category import Category
+from app.models.credit_card import CreditCard
+from app.models.credit_card_transaction import CreditCardTransaction
 
 router = APIRouter(
     prefix="/reports",
@@ -98,6 +100,64 @@ def get_reports_summary(
             "notes": transaction.notes
         })
 
+    card_transactions = (
+        db.query(CreditCardTransaction, CreditCard.card_name, CreditCard.last_four)
+        .join(CreditCard, CreditCard.id == CreditCardTransaction.credit_card_id)
+        .filter(
+            CreditCardTransaction.user_id == DEV_USER_ID,
+            CreditCardTransaction.transaction_date >= start_date,
+            CreditCardTransaction.transaction_date <= end_date,
+            CreditCardTransaction.transaction_type.in_(["purchase", "interest", "fee", "refund", "payment"])
+        )
+        .order_by(CreditCardTransaction.transaction_date.desc())
+        .all()
+    )
+
+    for entry, card_name, last_four in card_transactions:
+        amount = Decimal(str(entry.amount or 0))
+        month_key = entry.transaction_date.strftime("%Y-%m")
+        if entry.transaction_type in ("purchase", "interest", "fee"):
+            total_expenses += amount
+            monthly_data[month_key]["expenses"] += amount
+            category_data["credit_card"] += amount
+            report_type = "expense"
+        elif entry.transaction_type == "refund":
+            total_expenses -= amount
+            monthly_data[month_key]["expenses"] -= amount
+            category_data["credit_card"] -= amount
+            report_type = "refund"
+        else:
+            report_type = "payment"
+
+        transaction_rows.append({
+            "id": f"card-{entry.id}",
+            "title": entry.title,
+            "amount": money(amount),
+            "transaction_type": report_type,
+            "transaction_date": entry.transaction_date.isoformat(),
+            "account_id": None,
+            "category_id": "credit_card",
+            "notes": entry.notes,
+            "source": "credit_card",
+            "card_name": f"{card_name} •••• {last_four}"
+        })
+
+    transaction_rows.sort(key=lambda item: item["transaction_date"], reverse=True)
+
+    category_ids = [
+        int(category_id)
+        for category_id in category_data.keys()
+        if category_id not in ("uncategorized", "credit_card")
+    ]
+
+    category_names = {}
+    if category_ids:
+        category_names = dict(
+            db.query(Category.id, Category.name)
+            .filter(Category.id.in_(category_ids))
+            .all()
+        )
+
     monthly_report = []
 
     for month in sorted(monthly_data.keys()):
@@ -114,6 +174,11 @@ def get_reports_summary(
     category_report = [
         {
             "category_id": category_id,
+            "category_name": (
+                "Uncategorized"
+                if category_id == "uncategorized"
+                else ("Credit Card" if category_id == "credit_card" else category_names.get(int(category_id), "Unknown"))
+            ),
             "amount": money(amount)
         }
         for category_id, amount in sorted(
@@ -194,6 +259,20 @@ def get_reports_summary(
             .all()
         )
 
+    card_payments_by_account = dict(
+        db.query(
+            CreditCardTransaction.account_id,
+            func.coalesce(func.sum(CreditCardTransaction.amount), 0)
+        )
+        .filter(
+            CreditCardTransaction.user_id == DEV_USER_ID,
+            CreditCardTransaction.transaction_type == "payment",
+            CreditCardTransaction.account_id.in_(account_ids)
+        )
+        .group_by(CreditCardTransaction.account_id)
+        .all()
+    ) if account_ids else {}
+
     account_report = []
 
     for account in accounts:
@@ -203,6 +282,7 @@ def get_reports_summary(
             - Decimal(str(expenses_by_account.get(account.id, 0)))
             - Decimal(str(outgoing_transfers.get(account.id, 0)))
             + Decimal(str(incoming_transfers.get(account.id, 0)))
+            - Decimal(str(card_payments_by_account.get(account.id, 0)))
         )
 
         account_report.append({
@@ -222,7 +302,7 @@ def get_reports_summary(
             "total_income": money(total_income),
             "total_expenses": money(total_expenses),
             "net_savings": money(total_income - total_expenses),
-            "total_transactions": len(transactions)
+            "total_transactions": len(transactions) + len(card_transactions)
         },
         "monthly_report": monthly_report,
         "category_report": category_report,

@@ -1,4 +1,4 @@
-
+# dashboard.py
 from decimal import Decimal
 
 from fastapi import APIRouter, Depends
@@ -9,6 +9,9 @@ from app.models.transaction import Transaction
 from app.models.category import Category
 from app.services import account_service
 from app.services import loan_taken_service
+from app.services import credit_card_service
+from app.models.credit_card_transaction import CreditCardTransaction
+from app.models.credit_card import CreditCard
 
 
 router = APIRouter(
@@ -73,6 +76,7 @@ def get_dashboard_summary(
         DEV_USER_ID
     )
 
+    credit_card_outstanding = credit_card_service.get_total_outstanding(db, DEV_USER_ID)
     total_liabilities = (
         loan_taken_summary["outstanding_principal"]
         + loan_taken_summary["outstanding_interest"]
@@ -104,7 +108,7 @@ def get_dashboard_summary(
 
     recent_transactions = [
         {
-            "id": transaction.id,
+            "id": f"transaction-{transaction.id}",
             "title": transaction.title,
             "amount": transaction.amount,
             "transaction_type": transaction.transaction_type,
@@ -114,11 +118,32 @@ def get_dashboard_summary(
         for transaction, category_name in recent_transaction_rows
     ]
 
+    card_rows = (
+        db.query(CreditCardTransaction, CreditCard.card_name, CreditCard.last_four)
+        .join(CreditCard, CreditCard.id == CreditCardTransaction.credit_card_id)
+        .filter(CreditCardTransaction.user_id == DEV_USER_ID)
+        .order_by(CreditCardTransaction.transaction_date.desc(), CreditCardTransaction.created_at.desc())
+        .limit(10).all()
+    )
+    card_type_map = {"purchase": "expense", "interest": "expense", "fee": "expense", "refund": "income", "payment": "payment"}
+    for row, card_name, last_four in card_rows:
+        recent_transactions.append({
+            "id": f"card-{row.id}",
+            "title": row.title,
+            "amount": row.amount,
+            "transaction_type": card_type_map.get(row.transaction_type, row.transaction_type),
+            "transaction_date": row.transaction_date,
+            "category_name": f"{card_name} •••• {last_four}",
+        })
+    recent_transactions.sort(key=lambda item: (item["transaction_date"], str(item["id"])), reverse=True)
+    recent_transactions = recent_transactions[:5]
+
     return {
         "total_accounts": len(active_accounts),
         "total_balance": total_balance,
         "total_assets": total_assets,
         "total_liabilities": total_liabilities,
+        "credit_card_outstanding": credit_card_outstanding,
         "net_worth": net_worth,
         "available_balance": available_balance,
         "currency": "INR",

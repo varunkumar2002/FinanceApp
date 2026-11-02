@@ -1,3 +1,4 @@
+# loan_taken_service.py
 from datetime import date
 from decimal import Decimal, ROUND_HALF_UP
 
@@ -7,12 +8,16 @@ from app.models.loan_taken import LoanTaken
 from app.models.loan_taken_interest import LoanTakenInterest
 from app.models.loan_taken_payment import LoanTakenPayment
 
+from app.services.credit_card_service import get_total_outstanding
+from app.models.credit_card_transaction import CreditCardTransaction
+
 from app.schemas.loan_taken import (
     LoanTakenCreate,
     LoanTakenUpdate,
     LoanPaymentCreate,
 )
 
+from sqlalchemy import func
 
 ZERO = Decimal("0.00")
 CENT = Decimal("0.01")
@@ -415,15 +420,60 @@ def get_loan_summary(db: Session, user_id: int):
             .all()
         )
 
-    total_principal_borrowed = sum(
+    # -----------------------------------------------------
+    # PERSONAL / BANK LOAN CALCULATIONS
+    # -----------------------------------------------------
+
+    total_loan_principal = sum(
         (loan.principal_amount for loan in loans),
         start=ZERO,
     )
 
-    outstanding_principal = sum(
+    outstanding_loan_principal = sum(
         (loan.outstanding_principal for loan in loans),
         start=ZERO,
     )
+
+    # -----------------------------------------------------
+    # CREDIT CARD CALCULATIONS
+    # -----------------------------------------------------
+
+    # Current outstanding across all credit cards
+    credit_card_outstanding = get_total_outstanding(db, user_id)
+
+    # Historical net borrowing:
+    # Purchases + Interest + Fees - Refunds
+    # Payments are excluded because they repay existing debt.
+    credit_card_borrowed = (
+        db.query(
+            func.coalesce(func.sum(CreditCardTransaction.amount), 0)
+        )
+        .filter(
+            CreditCardTransaction.user_id == user_id,
+            CreditCardTransaction.transaction_type.in_(
+                ["purchase", "interest", "fee", "refund"]
+            ),
+        )
+        .first()[0]
+    )
+
+    credit_card_borrowed = Decimal(str(credit_card_borrowed or 0))
+
+    # -----------------------------------------------------
+    # COMBINED PRINCIPAL / BORROWED TOTALS
+    # -----------------------------------------------------
+
+    total_principal_borrowed = (
+        total_loan_principal + credit_card_borrowed
+    )
+
+    outstanding_principal = (
+        outstanding_loan_principal + credit_card_outstanding
+    )
+
+    # -----------------------------------------------------
+    # INTEREST CALCULATIONS FOR PERSONAL / BANK LOANS
+    # -----------------------------------------------------
 
     total_interest_generated = sum(
         (item.interest_amount for item in interests),
@@ -443,9 +493,14 @@ def get_loan_summary(db: Session, user_id: int):
         "total_loans": len(loans),
         "active_loans": sum(1 for loan in loans if loan.is_active),
         "closed_loans": sum(1 for loan in loans if not loan.is_active),
+
         "total_principal_borrowed": total_principal_borrowed,
         "outstanding_principal": outstanding_principal,
+
         "total_interest_generated": total_interest_generated,
         "total_interest_paid": total_interest_paid,
         "outstanding_interest": outstanding_interest,
+
+        "credit_card_outstanding": credit_card_outstanding,
+        "credit_card_borrowed": credit_card_borrowed,
     }

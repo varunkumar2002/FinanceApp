@@ -513,7 +513,7 @@ function ReportsPage() {
                     <div className="reports-panel-heading">
                         <div>
                             <h2>Expense Breakdown</h2>
-                            <p>Expenses grouped by category ID</p>
+                            <p>Expenses grouped by category</p>
                         </div>
                     </div>
 
@@ -533,10 +533,8 @@ function ReportsPage() {
 
                                     <div className="category-report-info">
                                         <span>
-                                            {item.category_id === "uncategorized"
-                                                ? "Uncategorized"
-                                                : `Category ${item.category_id}`}
-                                        </span>
+    {item.category_name || "Uncategorized"}
+</span>
 
                                         <strong>
                                             {formatCurrency(item.amount)}

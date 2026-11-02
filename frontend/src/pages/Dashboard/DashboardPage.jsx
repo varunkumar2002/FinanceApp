@@ -132,6 +132,38 @@ function DashboardPage() {
 
       </div>
 
+      <div className="dashboard-summary-grid">
+        <div className="dashboard-summary-card">
+          <div className="dashboard-card-top"><div className="dashboard-card-icon"><Wallet size={22} /></div><span>Total Liabilities</span></div>
+          <h2>{formatCurrency(dashboard.total_liabilities, dashboard.currency)}</h2>
+          <p>Loans and credit card outstanding</p>
+        </div>
+        <div className="dashboard-summary-card">
+          <div className="dashboard-card-top"><div className="dashboard-card-icon"><CircleDollarSign size={22} /></div><span>Net Worth</span></div>
+          <h2>{formatCurrency(dashboard.net_worth, dashboard.currency)}</h2>
+          <p>Total assets minus liabilities</p>
+        </div>
+      </div>
+
+      <div className="dashboard-section">
+        <div className="dashboard-section-header"><div><h2>Recent Activity</h2><p>Your latest income, expenses and card activity</p></div></div>
+        {(dashboard.recent_transactions || []).length === 0 ? (
+          <div className="dashboard-empty"><p>No recent activity yet.</p></div>
+        ) : (
+          <div className="dashboard-recent-list">
+            {dashboard.recent_transactions.map((item) => (
+              <div className="dashboard-recent-row" key={item.id}>
+                <div><strong>{item.title}</strong><p>{item.category_name || "Transaction"} · {new Date(item.transaction_date).toLocaleDateString("en-IN")}</p></div>
+                <strong className={item.transaction_type === "income" || item.transaction_type === "refund" ? "dashboard-positive" : ""}>
+                  {item.transaction_type === "income" || item.transaction_type === "refund" ? "+" : item.transaction_type === "payment" ? "−" : "−"}
+                  {formatCurrency(item.amount, dashboard.currency)}
+                </strong>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
       {/* Account list */}
       <div className="dashboard-section">
 
