@@ -24,8 +24,14 @@ class Investment(Base):
 
     name = Column(String(150), nullable=False)
     symbol = Column(String(50), nullable=True)
-
-    category = Column(String(50), nullable=False)
+    category = Column(String(50), nullable=False) # e.g., 'stocks', 'mutual_funds'
+    
+    # New SIP & Equity Configuration fields
+    investment_mode = Column(String(20), nullable=False, default="lumpsum") # 'lumpsum' or 'sip'
+    initial_invested_amount = Column(Numeric(15, 2), nullable=False, default=0)
+    monthly_sip_amount = Column(Numeric(15, 2), nullable=False, default=0)
+    sip_deduction_date = Column(Integer, nullable=True) # Day of the month (1-31)
+    primary_account_id = Column(Integer, ForeignKey("accounts.id"), nullable=True) # Linked bank account
 
     # Current market price per unit.
     current_price = Column(Numeric(15, 2), nullable=False, default=0)
@@ -42,6 +48,8 @@ class Investment(Base):
         back_populates="investment",
         cascade="all, delete-orphan",
     )
+    
+    primary_account = relationship("Account", foreign_keys=[primary_account_id])
 
 
 class InvestmentTransaction(Base):
@@ -76,7 +84,7 @@ class InvestmentTransaction(Base):
 
     __table_args__ = (
         CheckConstraint(
-            "transaction_type IN ('buy', 'sell', 'dividend')",
+            "transaction_type IN ('buy', 'sell', 'dividend', 'sip_deduction')",
             name="check_investment_transaction_type",
         ),
     )

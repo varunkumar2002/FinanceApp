@@ -8,7 +8,7 @@ import {
 
 import "./SettingsPage.css";
 
-function SettingsPage() {
+function SettingsPage({ onProfileUpdated }) {
     const [activeTab, setActiveTab] = useState("profile");
 
     const [profile, setProfile] = useState({
@@ -92,27 +92,32 @@ function SettingsPage() {
     }
 
     async function handleProfileSave(event) {
-        event.preventDefault();
+    event.preventDefault();
 
-        try {
-            setSaving(true);
-            setMessage("");
-            setError("");
+    try {
+        setSaving(true);
+        setMessage("");
+        setError("");
 
-            const updated = await updateProfile(profile);
+        const updated = await updateProfile(profile);
 
-            setProfile({
-                full_name: updated.full_name,
-                email: updated.email,
-            });
+        setProfile({
+            full_name: updated.full_name,
+            email: updated.email,
+        });
 
-            setMessage("Profile updated successfully.");
-        } catch (err) {
-            setError(err.message);
-        } finally {
-            setSaving(false);
+        // Update the name displayed in the main application header.
+        if (onProfileUpdated) {
+            onProfileUpdated(updated.full_name);
         }
+
+        setMessage("Profile updated successfully.");
+    } catch (err) {
+        setError(err.message);
+    } finally {
+        setSaving(false);
     }
+}
 
     async function handlePreferencesSave(event) {
         event.preventDefault();

@@ -11,6 +11,7 @@ import ChitFundsPage from "./pages/ChitFunds/ChitFundsPage";
 import InvestmentsPage from "./pages/Investments/InvestmentsPage";
 import ReportsPage from "./pages/Reports/ReportsPage";
 import SettingsPage from "./pages/Settings/SettingsPage";
+import { getSettings } from "./services/settingsService";
 
 import {
   LayoutDashboard,
@@ -72,6 +73,7 @@ function App() {
   const [dashboardData, setDashboardData] = useState(null);
   const [dashboardLoading, setDashboardLoading] = useState(false);
   const [dashboardError, setDashboardError] = useState("");
+  const [profileName, setProfileName] = useState("Personal User");
 
   // Check backend connection
   useEffect(() => {
@@ -91,6 +93,7 @@ function App() {
 
     checkConnection();
   }, []);
+
 
   // Fetch Dashboard data whenever Dashboard is opened
   useEffect(() => {
@@ -114,6 +117,25 @@ function App() {
 
     loadDashboard();
   }, [activePage]);
+
+  // Load the saved profile name when the application starts.
+useEffect(() => {
+    async function loadProfileName() {
+        try {
+            const data = await getSettings();
+
+            const savedName = data?.profile?.full_name?.trim();
+
+            if (savedName) {
+                setProfileName(savedName);
+            }
+        } catch (error) {
+            console.error("Unable to load profile name:", error);
+        }
+    }
+
+    loadProfileName();
+  }, []);
 
   // Manual Dashboard refresh
   const refreshDashboard = async () => {
@@ -279,9 +301,9 @@ const netWorth = Number(
               </div>
 
               <div className="profile-info">
-                <strong>My Account</strong>
-                <span>Personal User</span>
-              </div>
+    <strong>My Account</strong>
+    <span>{profileName}</span>
+</div>
 
               <ChevronDown size={16} />
 
@@ -671,7 +693,9 @@ const netWorth = Number(
                     ): activePage === "Reports" ? (
     <ReportsPage />
 ) : activePage === "Settings" ? (
-    <SettingsPage />
+    <SettingsPage
+    onProfileUpdated={(name) => setProfileName(name)}
+/>
 ) :
                       (
 
